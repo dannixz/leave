@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.LeaveRecordsMapper">
+	<!-- 分页 -->
+	<select id="LimitLeave" resultType="pojo.LeaveRecords">
+		SELECT * FROM leaverecords order by leaveTime desc
+		<if test="from!=null and pageSize!= null">
+			LIMIT #{from},#{pageSize}
+		</if>
+
+	</select>
+	<!-- 和 -->
+	<select id="getSum" resultType="int">
+		SELECT count(*) FROM leaverecords
+	</select>
+	<!-- 添加 -->
+	<insert id="AddLeave" parameterType="pojo.LeaveRecords">
+		INSERT INTO leaverecordsdb.leaverecords
+		(
+		NAME,
+		leaveTime,
+		reason
+		)
+		VALUES
+		(
+		#{name},
+		#{leaveTime},
+		#{reason}
+		)
+	</insert>
+	<insert id="DelLeave" parameterType="Integer">
+		DELETE FROM leaverecordsdb.leaverecords
+		WHERE id = #{id}
+	</insert>
+</mapper>
